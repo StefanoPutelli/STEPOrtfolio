@@ -37,8 +37,8 @@ export default function useTypewriter(props) {
     }, [currentIndex1, currentIndex2, props.text1, props.text2, props.minDelay, props.maxDelay]);
 
     return (
-        <div style={{ display: 'inline-block' }}>
-            <div style={{ display: 'inline-block', color: "white", fontFamily: "Source code pro", fontSize: 30, textAlign: "center" }} dangerouslySetInnerHTML={{ __html: displayText }} />
+        <div id="typewrite" style={{ display: 'inline-block' }}>
+            <div style={{ display: 'inline-block', color: "white", fontFamily: "Source code pro", fontSize: "5vh", textAlign: "center" }} dangerouslySetInnerHTML={{ __html: displayText }} />
             {/* {showCursor && <span style={{ display: 'flex', width: '2px', height: '24px', backgroundColor: 'white' }}>&nbsp;</span>} */}
         </div>
     );

@@ -6,6 +6,7 @@ import gitHub from "./img/github.svg";
 function App() {
 
   const [screenResize, setScreenResize] = useState(false);
+  const [frammato, setFrammato] = useState(false);
 
   useEffect(() => {
     var canvas = document.querySelector("#canvas")
@@ -13,8 +14,8 @@ function App() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     var config = {
-      particleNumber: 100,
-      maxParticleSize: 5,
+      particleNumber: 10,
+      maxParticleSize: 50,
       maxSpeed: 30,
       colorVariation: 255
     };
@@ -113,41 +114,43 @@ function App() {
 
     // First particle explosion
     initParticles(config.particleNumber);
+    if (!frammato) {
+      frame()
+      setFrammato(true)
+    }
 
     window.addEventListener('resize', () => {
       setScreenResize(!screenResize);
-    });
-    window.addEventListener("load", (event) => {
-      frame();
     });
 
     return () => {
       window.removeEventListener('resize', () => {
         setScreenResize(!screenResize);
       });
-      window.removeEventListener("load", () => {
-        frame();
-      });
     };
 
-  }, [screenResize]);
+  }, [screenResize,frammato]);
 
-
+  useEffect(() => {
+    console.log(document.querySelector("#typewrite"))
+  })
   return (
     <div className="App">
       <canvas id="canvas"></canvas>
-      <div className="absolute top-[20%] w-screen">
+      <div className="absolute top-[10%] w-screen">
         <div className="m-auto w-screen text-center">
-          <div className="h-[20vh]">
-          <Typewriter minDelay={10} maxDelay={20} text1="Hy, my name is Stefano" text2="I am a Full-stack Developer" />
+          <div className="h-[20vh] mb-[10vh]">
+            <Typewriter minDelay={10} maxDelay={20} text1="Hi, my name is Stefano." text2="I am a Full-stack Developer" />
           </div>
+        </div>
+        <div className="relative top-[10vh]">
           <img className="m-auto w-[20vh] cursor-pointer" src={gitHub} alt="My github" onClick={() => {
             window.open("https://github.com/StefanoPutelli/", "_blank");
           }} />
-          <div style={{ display: 'inline-block', color: "white",marginTop: "30px" ,width:"100%",fontFamily: "Source code pro", fontSize: 15, textAlign: "center" }} dangerouslySetInnerHTML={{ __html: "Check out my github to follow my projects" }} />
+          <div style={{ display: 'inline-block', color: "white", marginTop: "30px", width: "100%", fontFamily: "Source code pro", fontSize: 15, textAlign: "center" }} dangerouslySetInnerHTML={{ __html: "Check out my github to<br>follow my projects" }} />
+          <div style={{ color: "white", marginTop: "10px", width: "100%", fontFamily: "Source code pro", fontSize: 15, textAlign: "center" }} dangerouslySetInnerHTML={{ __html: "Try to click on the background,<br>something cool will happen..." }} />
         </div>
       </div>
-      <div style={{ position:"absolute" ,bottom:"50px" , color: "white",marginTop: "30px" ,width:"100%",fontFamily: "Source code pro", fontSize: 15, textAlign: "center" }} dangerouslySetInnerHTML={{ __html: "Try to click on the background, something cool will happen..." }} />
     </div>
   );
 }
