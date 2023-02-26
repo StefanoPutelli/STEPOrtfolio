@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Typewriter from "./comp/typewriter";
 import gitHub from "./img/github.svg";
 import cv from "./img/cv.png";
@@ -8,10 +8,46 @@ import Bg from "./comp/animBg";
 function App() {
 
   const [screenResize, setScreenResize] = useState(window.innerHeight / window.innerWidth);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [scroll, setScroll] = useState({ left: 0, top: 0 });
+
+
+  useEffect(() => {
+    const ele = document.getElementById('scrollable');
+    ele.scrollTop = scroll.top;
+    ele.scrollLeft = scroll.left;
+    function handleDown(e) {
+      setPos({ x: e.clientX, y: e.clientY });
+      setScroll({ top: ele.scrollTop, left: ele.scrollLeft });
+      ele.style.cursor = 'grabbing';
+      ele.style.userSelect = 'none';
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleUp)
+    }
+    function handleMove(e) {
+      const dx = e.clientX - pos.x;
+      const dy = e.clientY - pos.y;
+
+      // Scroll the element
+      ele.scrollTop = scroll.top - dy;
+      ele.scrollLeft = scroll.left - dx;
+    }
+    function handleUp() {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+      ele.style.cursor = 'grab';
+      ele.style.removeProperty('user-select');
+    }
+    window.addEventListener('mousedown', handleDown);
+    return () => {
+      window.removeEventListener('mousedown', handleDown);
+    }
+  });
+
 
   return (
-    <div className="App">
-      <Bg screenResize={screenResize} setScreenResize={setScreenResize}/>
+    <div id="scrollable" className="overflow-auto h-[5000px] w-[5000px] cursor-grab">
+      <Bg screenResize={screenResize} setScreenResize={setScreenResize} />
       <div className="absolute top-[10vh] w-screen">
         <div className="m-auto w-screen text-center">
           <div className="h-[20vh] mb-[10vh]">
