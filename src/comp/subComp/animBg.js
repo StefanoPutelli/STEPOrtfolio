@@ -26,8 +26,8 @@ export default function Bg(props) {
             ]
         };
         var particles = [], drawBg = function (ctx, color) {
-            ctx.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // ctx.fillStyle = "rgba(0,0,0,0)";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         };
 
         // Particle Constructor

@@ -9,7 +9,7 @@ export default function World() {
 
     function getScrollCenter() {
         let x = X / 2 - window.innerWidth / 2;
-        let y = Y / 2 - window.innerHeight / 3;
+        let y = Y / 1.9 - window.innerHeight / 3;
         return { x, y }
     }
 
@@ -93,9 +93,9 @@ export default function World() {
 
     return (
         <div id="scrollable" className="h-screen w-screen overflow-hidden">
-            <Bg />
-            <div id="childs" style={{ height: X + "px", width: Y + "px" }} className={"cursor-grab relative border-solid border-white border-8"}>
-                <div className="centered">
+            <div id="childs" style={{ height: X + "px", width: Y + "px" }} className={"cursor-grab relative border-solid border-blue-900 border-8"}>
+                <Bg />
+                <div className="centered_almost">
                     <Home />
                 </div>
             </div>
