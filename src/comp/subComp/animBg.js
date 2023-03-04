@@ -5,8 +5,6 @@ export default function Bg(props) {
     const [frammato, setFrammato] = useState(false);
     const [clickEnabled, setClickEnabled] = useState(true);
 
-    const setScreenResize = props.setScreenResize;
-
     useEffect(() => {
         var canvas = document.querySelector("#canvas")
         var ctx = canvas.getContext('2d');
@@ -117,12 +115,13 @@ export default function Bg(props) {
             frame()
         }
 
-        function resize() {
-            setScreenResize(window.innerHeight / window.innerWidth);
-        }
 
-        document.body.addEventListener("click", click);
-        window.addEventListener('resize', resize);
+        function checkClick(){
+            window.addEventListener('mouseup',click)
+            setTimeout(() => {
+                window.removeEventListener('mouseup', click);
+            },400)
+        }
 
         // First particle explosion
         initParticles(config.particleNumber);
@@ -131,16 +130,16 @@ export default function Bg(props) {
             setFrammato(true)
         }
 
+        window.addEventListener('mousedown', checkClick);
 
         return () => {
-            window.removeEventListener('resize', resize);
-            document.body.removeEventListener("click", click);
+            window.removeEventListener('mousedown', checkClick);
         };
 
-    }, [frammato,clickEnabled,setScreenResize,props.screenResize]);
+    }, [frammato,clickEnabled,props.screenResize]);
 
     return (
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" className="h-screen w-screen"></canvas>
     )
 
 }
