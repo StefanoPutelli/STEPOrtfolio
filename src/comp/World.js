@@ -7,10 +7,10 @@ const Y = "3000";
 
 export default function World() {
 
-    function getScrollCenter(){
-        let x = X/2 - window.innerWidth/2;
-        let y = Y/2 - window.innerHeight/3; 
-        return {x,y}
+    function getScrollCenter() {
+        let x = X / 2 - window.innerWidth / 2;
+        let y = Y / 2 - window.innerHeight / 3;
+        return { x, y }
     }
 
     const center = getScrollCenter()
@@ -55,6 +55,12 @@ export default function World() {
         const childs = document.getElementById('childs');
         ele.scrollTop = pos.current.top;
         ele.scrollLeft = pos.current.left;
+
+        function preventMotion(event) {
+            window.scrollTo(0, 0);
+            event.preventDefault();
+            event.stopPropagation();
+        }
         function handleDown(e) {
             pos.current = { ...pos.current, x: e.touches[0].clientX, y: e.touches[0].clientY, left: ele.scrollLeft, top: ele.scrollTop }
             ele.style.userSelect = 'none';
@@ -63,6 +69,7 @@ export default function World() {
             window.addEventListener('touchend', handleUp)
         }
         function handleMove(e) {
+            preventMotion(e);
             const dx = e.touches[0].clientX - pos.current.x;
             const dy = e.touches[0].clientY - pos.current.y;
             // Scroll the element
@@ -77,15 +84,17 @@ export default function World() {
             ele.style.removeProperty('user-select');
         }
         window.addEventListener('touchstart', handleDown);
+        window.addEventListener('scroll', preventMotion, false)
         return () => {
             window.removeEventListener('touchstart', handleDown);
+            window.removeEventListener('scroll', preventMotion, false)
         }
     }, []);
 
     return (
         <div id="scrollable" className="h-screen w-screen overflow-hidden">
             <Bg />
-            <div id="childs" style={{height: X + "px", width: Y + "px"}} className={"cursor-grab relative border-solid border-white border-8"}>
+            <div id="childs" style={{ height: X + "px", width: Y + "px" }} className={"cursor-grab relative border-solid border-white border-8"}>
                 <div className="centered">
                     <Home />
                 </div>

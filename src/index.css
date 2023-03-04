@@ -3,34 +3,47 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700|Megrim&display=swap');
+
 html,
 body {
-height: 100%;
-width: 100%;
-margin: 0;
-padding: 0;
-scroll-behavior: smooth;
-background-color: black;
-overscroll-behavior: none;
-}
-canvas {
-border: 1px soild black;
-position: fixed;
-}
-h1 {
-display: inline-block;
-padding: .3em;
-font-family: 'Megrim', cursive;
-position: absolute;
-top: 50%;
-left: 50%;
-user-select: none;
-transform: translate(-50%,-50%);
-color: rgba(255,255,255,.68);
-border: .075em solid rgba(255,255,255,.1);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background-color: black;
+    overscroll-behavior: none;
+    overflow: hidden;
 }
 
-p { display: inline }
+body {
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    border: 1px soild black;
+    position: fixed;
+}
+
+h1 {
+    display: inline-block;
+    padding: .3em;
+    font-family: 'Megrim', cursive;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, .68);
+    border: .075em solid rgba(255, 255, 255, .1);
+}
+
+p {
+    display: inline
+}
 
 
 .centered {
@@ -40,5 +53,3 @@ p { display: inline }
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-
-
