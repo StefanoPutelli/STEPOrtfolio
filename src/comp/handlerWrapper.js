@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import drawTiles from "./utils/drawTiles";
-import RayCaster from "./Raycaster";
 import World from "./World";
+import Overlay from "./LoadingOverlay";
 
 const TILE_SIZE = 50;
 
@@ -20,8 +20,8 @@ export default function HandlerWrapper(props) {
 
     const [loaded, setLoaded] = useState(false);
 
-    const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-    
+    const [windowSize, setWindowSize] = useState({ width: window.innerWidth * window.devicePixelRatio, height: window.innerHeight * window.devicePixelRatio })
+
     const timeOnLoad = useRef(0);
     const grubbing = useRef(false);
 
@@ -36,7 +36,7 @@ export default function HandlerWrapper(props) {
 
     function getScrollCenter() {
         let x = X / 2 - window.innerWidth / 2;
-        let y = Y / 1.9 - window.innerHeight / 3;
+        let y = Y / 2 - window.innerHeight / 2;
         return { x, y }
     }
 
@@ -53,8 +53,31 @@ export default function HandlerWrapper(props) {
         return false;
     }
 
-    function setSize(){
-        setWindowSize({width: window.innerWidth, height: window.innerHeight})
+    function setSize() {
+        let screenWidth = window.innerWidth;
+        let screenHeight = window.innerHeight;
+
+        // Gestione della barra degli strumenti del browser
+        if (window.screen.availHeight > window.innerHeight) {
+            screenHeight += (window.screen.availHeight - window.innerHeight);
+        }
+
+        // Gestione della rotazione del dispositivo
+        if (window.innerHeight > window.innerWidth) {
+            screenWidth = window.innerHeight;
+            screenHeight = window.innerWidth;
+
+            // Gestione della barra degli strumenti del browser in modalità orizzontale
+            if (window.screen.availWidth > window.innerWidth) {
+                screenWidth += (window.screen.availWidth - window.innerWidth);
+            }
+        }
+
+        // Gestione della densità di pixel
+        // const pixelRatio = window.devicePixelRatio;
+        // screenWidth *= pixelRatio;
+        // screenHeight *= pixelRatio;
+        setWindowSize({ width: window.innerWidth > window.innerHeight ? screenHeight : screenWidth, height: screenHeight })
     }
 
     useEffect(() => {
@@ -68,15 +91,14 @@ export default function HandlerWrapper(props) {
         function setTimeAndLoad() {
             timeOnLoad.current = Date.now();
             setLoaded(true);
+            setSize();
             scrollable.current = document.getElementById('scrollable');
             tiles.current = drawTiles(climb_start, center.y, window.innerWidth > 800 ? 800 : window.innerWidth, TILE_SIZE, N_TILES);
-            console.log("Page loaded")
         }
         if (document.readyState === "complete") {
             setTimeAndLoad();
         } else {
             window.addEventListener('load', setTimeAndLoad);
-            console.log('event here')
         }
         return () => {
             window.removeEventListener("load", setTimeAndLoad);
@@ -92,7 +114,7 @@ export default function HandlerWrapper(props) {
                 let t = getTime();
                 scrollable.current.scrollTop += 1 / 2 * t * t * 9.81 * 0.00001 + 1;
             }
-        }, 1000/FPS);
+        }, 1000 / FPS);
         return () => clearInterval(interval);
     }, [loaded]);
 
@@ -108,7 +130,7 @@ export default function HandlerWrapper(props) {
         //     event.stopPropagation();
         // }
         function handleDown(e) {
-            if(climb_started.current){
+            if (climb_started.current) {
                 if (!checkIfGrabbable(tiles.current, e.clientX + scrollable.current.scrollLeft, e.clientY + scrollable.current.scrollTop, TILE_SIZE)) return;
             }
             grubbing.current = true;
@@ -121,10 +143,10 @@ export default function HandlerWrapper(props) {
             window.addEventListener('mouseup', handleUp)
         }
         function handleDown_touch(e) {
-            if(climb_started.current){
+            if (climb_started.current) {
                 if (!checkIfGrabbable(tiles.current, e.touches[0].clientX + scrollable.current.scrollLeft, e.touches[0].clientY + scrollable.current.scrollTop, TILE_SIZE)) return;
             }
-            grubbing.current = true;grubbing.current = true;
+            grubbing.current = true; grubbing.current = true;
             pos.current = { ...pos.current, x: e.touches[0].clientX, y: e.touches[0].clientY, left: scrollable.current.scrollLeft, top: scrollable.current.scrollTop }
             ele.style.userSelect = 'none';
             childs.style.userSelect = 'none';
@@ -180,13 +202,16 @@ export default function HandlerWrapper(props) {
     }
 
     return (
-        <div id="scrollable" className="h-screen w-screen overflow-hidden">
-            <World size={{
-                width: windowSize.width,
-                height: windowSize.height
+        <>
+            <Overlay show={loaded} />
+            <div id="scrollable" className="h-screen w-screen overflow-hidden">
+                <World size={{
+                    width: windowSize.width,
+                    height: windowSize.height
                 }}
-                goClimb={goClimb} X={props.X} Y={props.Y}
-            />
-        </div>
+                    goClimb={goClimb} X={props.X} Y={props.Y}
+                />
+            </div>
+        </>
     );
 }

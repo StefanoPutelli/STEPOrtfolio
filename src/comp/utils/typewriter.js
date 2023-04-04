@@ -6,7 +6,6 @@ export default function useTypewriter(props) {
     const [currentIndex2, setCurrentIndex2] = useState(-1);
 
     useEffect(() => {
-
         function getRandomDelay() {
             return Math.pow(Math.random() * (props.maxDelay - props.minDelay) + props.minDelay, 1.6);
         }
@@ -36,9 +35,6 @@ export default function useTypewriter(props) {
     }, [currentIndex1, currentIndex2, props.text1, props.text2, props.minDelay, props.maxDelay]);
 
     return (
-        <div style={{ display: 'inline-block' }}>
-            <div style={{ display: 'inline-block', color: "white", fontFamily: "Source code pro",fontSize: props.textSize, textAlign: "center",marginLeft:"10px",marginRight: "10px" }} dangerouslySetInnerHTML={{ __html: displayText }} />
-            {/* {showCursor && <span style={{ display: 'flex', width: '2px', height: '24px', backgroundColor: 'white' }}>&nbsp;</span>} */}
-        </div>
+            <div style={{ display: 'block', color: "white", fontFamily: "Source code pro",fontSize: props.textSize, height:props.textSize*3, textAlign: "center"}} dangerouslySetInnerHTML={{ __html: displayText }} />
     );
 }
