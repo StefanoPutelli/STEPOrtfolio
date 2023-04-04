@@ -31,9 +31,7 @@ export default function Home(props) {
                             window.open("https://drive.google.com/file/d/1Knr0Q_yJuN6LXZ6u8p_Xy7lwKWCppt-X/view?usp=sharing", "_blank");
                         }} />
                         <div style={{ display: 'inline-block', color: "white", marginTop: "0%", fontFamily: "Source code pro", fontSize: 15, textAlign: "center", alignItems: "center" }} dangerouslySetInnerHTML={{ __html: "Here is my CV" }} /> */}
-                    <img className="inline mt-5 cursor-pointer" src={cube} alt="WebRayCasting" onClick={() => {
-                        window.open("https://www.stepo.cloud/webraycasting", "_blank");
-                    }} />
+                    <a href="/webraycasting"><img className="inline mt-5 cursor-pointer" src={cube} alt="WebRayCasting" /></a>
                     <div className="w-[100%]">
                         <div id="Text2" className={"inline text-white ml-[10px] text-center justify-center text-"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my<br>latest project" }} />
                     </div>

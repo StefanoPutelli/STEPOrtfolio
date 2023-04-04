@@ -294,7 +294,7 @@ export class Screen {
     drawMap(ctx, map2D, playerX, playerY) {
         let mapWidth = map2D[0].length;
         let mapHeight = map2D.length;
-        let mapScale = this.dimension.width * 0.5 / mapWidth;
+        let mapScale = this.dimension.height * 0.5 / mapWidth;
         ctx.fillStyle = "rgba(0,0,0,0)";
         ctx.fillRect(0, 0, mapWidth * mapScale, mapHeight * mapScale);
         for(let i = 0; i < mapHeight; i++) {

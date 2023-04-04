@@ -4,12 +4,12 @@ import map_text from "./raycast_comp/conf/map.txt";
 import conf from "./raycast_comp/conf/config.json";
 
 const Map = new Map2D(map_text);
-const Ray = new Player(conf, Map, { x: 28, y: 20 }, 90);
+const Ray = new Player(conf, Map, {x:28 , y:20}, 90);
 const screen = new Screen(conf);
 
 //TODO: togliere lo shadowblur e cambaire invece il colore delle linee
 
-function RayCaster({ width, height, right, top }) {
+export default function RayCaster() {
 
   const canvas = useRef({
     canvas: null,
@@ -18,7 +18,7 @@ function RayCaster({ width, height, right, top }) {
   const keyPressed = useRef({})
   const mouseTurned = useRef(0);
 
-  function checkTurn() {
+  function checkTurn(){
     Ray.turn(mouseTurned.current);
     mouseTurned.current = 0;
   }
@@ -36,20 +36,20 @@ function RayCaster({ width, height, right, top }) {
 
 
   useEffect(() => {
-    if (!canvas.current.canvas) return;
+    if(!canvas.current.canvas) return;
     setInterval(() => {
-      Ray.move(keyPressed.current, conf.player_speed);
+      Ray.move(keyPressed.current,conf.player_speed);
       checkTurn();
-      screen.drawScreen(canvas.current.ctx, canvas.current.canvas, Ray.rayCastInTheFov(), Map);
+      screen.drawScreen(canvas.current.ctx,canvas.current.canvas, Ray.rayCastInTheFov(), Map);
       screen.drawMap(canvas.current.ctx, Map.map2D, Ray.getPlayerPosition().x, Ray.getPlayerPosition().y);
-    }, 1000 / conf.max_fps);
+    }, 1000/conf.max_fps);
     return () => {
       clearInterval();
     }
   }, []);
 
   useEffect(() => {
-    if (!canvas.current.canvas) return;
+    if(!canvas.current.canvas) return;
     const handleMouseMove = (e) => {
       mouseTurned.current += e.movementX * -0.02;
     }
@@ -61,15 +61,14 @@ function RayCaster({ width, height, right, top }) {
     }
     async function lockPointer() {
       canvas.current.canvas.requestPointerLock({
-        unadjustedMovement: true,
-      });
+          unadjustedMovement: true,
+        });
     }
     const handleResize = () => {
-      console.log(height, width)
-      canvas.current.canvas.height = height;
-      canvas.current.canvas.width = width;
-      Ray.setDimensions(width, height, conf.FOV);
-      screen.setDimensions(width, height, conf.FOV);
+      canvas.current.canvas.height = window.innerHeight;
+      canvas.current.canvas.width = window.innerWidth;
+      Ray.setDimensions(window.innerWidth,  window.innerHeight, conf.FOV);
+      screen.setDimensions(window.innerWidth,  window.innerHeight, conf.FOV);
     }
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('keydown', handleKeyDown);
@@ -88,18 +87,14 @@ function RayCaster({ width, height, right, top }) {
   }, []);
 
   return (
-    <div className="RayCast" style={{ position: "absolute", right: { right }, top: { top } }}>
-      <div style={{position: "relative", height: {width}, width: {width}}}>
-        <canvas id="rayCanvas" style={{ backgroundColor: "black", display: "block"}} />
-        <canvas id="miniMap" style={{ display: "block", position: "absolute", top: "0px", left: "0px" }} />
-        <div style={{ position: "absolute", right: "0", top: "0", color: "white" }}>
-          <p>WASD to move</p>
-          <p>Mouse to turn</p>
-          <p>Click to lock mouse</p>
-        </div>
+    <div className="App">
+      <canvas id="rayCanvas" style={{ backgroundColor: "black", display: "block", position: "absolute", top: "0px", left: "0px" }} />
+      <canvas id="miniMap" style={{ display: "block", position: "absolute", top: "0px", left: "0px" }} />
+      <div style={{position: "absolute", right: "0", top: "0", color:"white"}}>
+        <p className="block">WASD to move</p>
+        <p className="block">Mouse to turn</p>
+        <p className="block">Click to lock mouse</p>
       </div>
     </div>
   );
 }
-
-export default RayCaster;
