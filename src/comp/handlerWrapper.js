@@ -62,17 +62,6 @@ export default function HandlerWrapper(props) {
             screenHeight += (window.screen.availHeight - window.innerHeight);
         }
 
-        // Gestione della rotazione del dispositivo
-        if (window.innerHeight > window.innerWidth) {
-            screenWidth = window.innerHeight;
-            screenHeight = window.innerWidth;
-
-            // Gestione della barra degli strumenti del browser in modalità orizzontale
-            if (window.screen.availWidth > window.innerWidth) {
-                screenWidth += (window.screen.availWidth - window.innerWidth);
-            }
-        }
-
         // Gestione della densità di pixel
         // const pixelRatio = window.devicePixelRatio;
         // screenWidth *= pixelRatio;
@@ -92,8 +81,14 @@ export default function HandlerWrapper(props) {
             timeOnLoad.current = Date.now();
             setLoaded(true);
             setSize();
+            //activate gravity
+            //################
             scrollable.current = document.getElementById('scrollable');
             tiles.current = drawTiles(climb_start, center.y, window.innerWidth > 800 ? 800 : window.innerWidth, TILE_SIZE, N_TILES);
+            setTimeout(() => {
+                climb_started.current = true;
+                timeOnLoad.current = Date.now();
+            }, 1000);
         }
         if (document.readyState === "complete") {
             setTimeAndLoad();
@@ -195,10 +190,6 @@ export default function HandlerWrapper(props) {
 
     function goClimb() {
         scrollable.current.scrollLeft = climb_start;
-        setTimeout(() => {
-            climb_started.current = true;
-            timeOnLoad.current = Date.now();
-        }, 200);
     }
 
     return (

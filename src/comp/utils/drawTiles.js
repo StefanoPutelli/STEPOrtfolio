@@ -17,7 +17,6 @@ export default function drawRandomTiles(x_start, y_start, width , size, n_tiles)
     const canvas = document.getElementById('tileCanvas');
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = "#a1681f";
-    ctx.fillRect(x_start, 0, width, canvas.height);
     const tiles = generateTiles(width - size, canvas.height, n_tiles, x_start, size);
     for(let i = 0; i < tiles.length; i++){
         ctx.fillStyle = tiles[i].color;
