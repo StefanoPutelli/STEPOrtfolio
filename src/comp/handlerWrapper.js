@@ -29,6 +29,8 @@ export default function HandlerWrapper(props) {
 
     const climb_started = useRef(false);
 
+    const gravity = useRef(false);
+
     const tiles = useRef(null);
 
     const center = getScrollCenter()
@@ -86,7 +88,7 @@ export default function HandlerWrapper(props) {
             scrollable.current = document.getElementById('scrollable');
             tiles.current = drawTiles(climb_start, center.y, window.innerWidth > 800 ? 800 : window.innerWidth, TILE_SIZE, N_TILES);
             setTimeout(() => {
-                climb_started.current = true;
+                gravity.current = true;
                 timeOnLoad.current = Date.now();
             }, 1000);
         }
@@ -105,7 +107,7 @@ export default function HandlerWrapper(props) {
     useEffect(() => {
         if (!loaded) return;
         const interval = setInterval(() => {
-            if (scrollable.current.scrollTop < falling_bottom && !grubbing.current && climb_started.current) {
+            if (scrollable.current.scrollTop < falling_bottom && !grubbing.current && gravity.current) {
                 let t = getTime();
                 scrollable.current.scrollTop += 1 / 2 * t * t * 9.81 * 0.00001 + 1;
             }

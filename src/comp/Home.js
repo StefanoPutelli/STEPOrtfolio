@@ -6,34 +6,30 @@ import { useEffect } from "react";
 
 export default function Home(props) {
 
-    useEffect(() => {
-        document.getElementById("Home").style.width = props.size.width + "px";
-        document.getElementById("Text1").style.fontSize = props.size.width / 50 + "px";
-        document.getElementById("Text2").style.fontSize = props.size.width / 50 + "px";
-        document.getElementById("climbButton").style.width = props.size.width / 5 + "px";
-        document.getElementById("climbButton").style.fontSize = props.size.width / 40 + "px";
-    }, [props.size])
+    // useEffect(() => {
+    //     document.getElementById("Home").style.width = props.size.height + "px";
+    //     document.getElementById("Text1").style.fontSize = props.size.height / 60 + "px";
+    //     document.getElementById("Text2").style.fontSize = props.size.height/ 60 + "px";
+    //     document.getElementById("climbButton").style.width = props.size.height/ 5 + "px";
+    //     document.getElementById("climbButton").style.fontSize = props.size.height / 50 + "px";
+    // }, [props.size])
 
     return (
         <div id="Home">
             <div className="m-auto w-[100%] h-min text-center">
                 <div className="h-[30%]">
-                    <Typewriter textSize={props.size.width/35} minDelay={10} maxDelay={20} text1="Hi, my name is Stefano." text2="I am a Full-stack Developer" />
+                    <Typewriter className="" minDelay={10} maxDelay={20} text1="Hi, my name is Stefano." text2="I am a Full-stack Developer" />
                 </div>
             </div>
             <div className="block w-[100%]">
-                <img className="block mt-5 m-auto w-[20%] cursor-pointer" src={gitHub} alt="My github" onClick={() => {
+                <img className="block mt-5 m-auto w-[20vh] cursor-pointer" src={gitHub} alt="My github" onClick={() => {
                     window.open("https://github.com/StefanoPutelli/", "_blank");
                 }} />
-                <div id="Text1" className={"block mt-4 text-white text-center justify-center"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my github to<br>follow my projects" }} />
-                <div className="block m-auto w-[20%]">
-                    {/* <img className="inline h-[12%] mt-5 cursor-pointer" src={cv} alt="CV" onClick={() => {
-                            window.open("https://drive.google.com/file/d/1Knr0Q_yJuN6LXZ6u8p_Xy7lwKWCppt-X/view?usp=sharing", "_blank");
-                        }} />
-                        <div style={{ display: 'inline-block', color: "white", marginTop: "0%", fontFamily: "Source code pro", fontSize: 15, textAlign: "center", alignItems: "center" }} dangerouslySetInnerHTML={{ __html: "Here is my CV" }} /> */}
-                    <a href="/webraycasting"><img className="inline mt-5 cursor-pointer" src={cube} alt="WebRayCasting" /></a>
+                <div id="Text1" className={"block mt-4 text-white text-center justify-center text-[2vh]"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my github to<br>follow my projects" }} />
+                <div className="block m-auto">
+                    <a href="/webraycasting"><img className="mt-5 cursor-pointer h-[20vh] m-auto" src={cube} alt="WebRayCasting" /></a>
                     <div className="w-[100%]">
-                        <div id="Text2" className={"inline text-white ml-[10px] text-center justify-center text-"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my<br>latest project" }} />
+                        <div id="Text2" className={"text-white text-center m-auto text-[1.8vh]"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my<br>latest project" }} />
                     </div>
                 </div>
                 <div id="climbButton" className="block m-auto">
