@@ -18,7 +18,9 @@ export default function Home(props) {
                     }} />
                     <div id="Text1" className={"block mt-4 text-white text-center justify-center text-[2vh]"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my github to<br>follow my projects" }} />
                     <div className="block m-auto">
-                        <a href="/webraycasting"><img className="mt-5 cursor-pointer h-[20vh] m-auto" src={cube} alt="WebRayCasting" /></a>
+                        <div className="block m-auto w-fit">
+                            <a href="/webraycasting"><img className="mt-5 cursor-pointer h-[20vh]" src={cube} alt="WebRayCasting" /></a>
+                        </div>
                         <div className="w-[100%]">
                             <div id="Text2" className={"text-white text-center m-auto text-[1.8vh]"} style={{ fontFamily: "Source code pro" }} dangerouslySetInnerHTML={{ __html: "Check out my<br>latest project" }} />
                         </div>
