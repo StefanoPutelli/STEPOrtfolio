@@ -100,7 +100,7 @@ export default function HandlerWrapper(props) {
         return () => {
             window.removeEventListener("load", setTimeAndLoad);
         }
-    }, []);
+    },[center.y]);
 
     //TODO: la pagina cade
 
@@ -113,6 +113,7 @@ export default function HandlerWrapper(props) {
             }
         }, 1000 / FPS);
         return () => clearInterval(interval);
+    // eslint-disable-next-line
     }, [loaded]);
 
     useEffect(() => {

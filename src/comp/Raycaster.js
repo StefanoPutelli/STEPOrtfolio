@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Map2D, Screen, Player } from "./raycast_comp/classes";
 import map_text from "./raycast_comp/conf/map.txt";
 import conf from "./raycast_comp/conf/config.json";
@@ -49,7 +49,8 @@ export default function RayCaster() {
   }, []);
 
   useEffect(() => {
-    if(!canvas.current.canvas) return;
+    const canv = canvas.current
+    if(!canv.canvas) return;
     const handleMouseMove = (e) => {
       mouseTurned.current += e.movementX * -0.02;
     }
@@ -60,19 +61,19 @@ export default function RayCaster() {
       delete keyPressed.current[e.key];
     }
     async function lockPointer() {
-      canvas.current.canvas.requestPointerLock({
+      canv.canvas.requestPointerLock({
           unadjustedMovement: true,
         });
     }
     const handleResize = () => {
-      canvas.current.canvas.height = window.innerHeight;
-      canvas.current.canvas.width = window.innerWidth;
+      canv.canvas.height = window.innerHeight;
+      canv.canvas.width = window.innerWidth;
       Ray.setDimensions(window.innerWidth,  window.innerHeight, conf.FOV);
       screen.setDimensions(window.innerWidth,  window.innerHeight, conf.FOV);
     }
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('keydown', handleKeyDown);
-    canvas.current.canvas.addEventListener("click", lockPointer);
+    canv.canvas.addEventListener("click", lockPointer);
     window.addEventListener('resize', handleResize);
     window.addEventListener('load', handleResize);
     window.addEventListener('keyup', handleKeyUp);
@@ -80,7 +81,7 @@ export default function RayCaster() {
       window.removeEventListener('keyup', handleKeyUp);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('keydown', handleKeyDown);
-      canvas.current.canvas.removeEventListener("click", lockPointer);
+      canv.canvas.removeEventListener("click", lockPointer);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('load', handleResize);
     }

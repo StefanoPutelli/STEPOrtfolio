@@ -35,6 +35,6 @@ export default function useTypewriter(props) {
     }, [currentIndex1, currentIndex2, props.text1, props.text2, props.minDelay, props.maxDelay]);
 
     return (
-            <div style={{ display: 'block', color: "white", fontFamily: "Source code pro",fontSize: "3.5vh", height:"10.5vh", textAlign: "center"}} dangerouslySetInnerHTML={{ __html: displayText }} />
+            <div style={{ display: 'block', color: "white", fontFamily: "Source code pro",fontSize: "2.8vh", height:"8.4vh", textAlign: "center"}} dangerouslySetInnerHTML={{ __html: displayText }} />
     );
 }
