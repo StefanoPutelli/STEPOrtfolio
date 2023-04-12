@@ -3,11 +3,9 @@ import drawTiles from "./utils/drawTiles";
 import World from "./World";
 import Overlay from "./LoadingOverlay";
 
-const TILE_SIZE = 50;
+import { tile_size } from "./utils/configs";
 
 const climb_start = 200;
-
-const N_TILES = 30;
 
 const FPS = 60;
 
@@ -17,20 +15,13 @@ export default function HandlerWrapper(props) {
     const Y = props.Y;
 
     const falling_bottom = Y;
-
     const [loaded, setLoaded] = useState(false);
-
     const [windowSize, setWindowSize] = useState({ width: window.innerWidth * window.devicePixelRatio, height: window.innerHeight * window.devicePixelRatio })
-
     const timeOnLoad = useRef(0);
     const grubbing = useRef(false);
-
     const scrollable = useRef(null);
-
     const climb_started = useRef(false);
-
     const gravity = useRef(false);
-
     const tiles = useRef(null);
 
     const center = getScrollCenter()
@@ -86,7 +77,10 @@ export default function HandlerWrapper(props) {
             //activate gravity
             //################
             scrollable.current = document.getElementById('scrollable');
-            tiles.current = drawTiles(climb_start, center.y, window.innerWidth > 800 ? 800 : window.innerWidth, TILE_SIZE, N_TILES);
+            drawTiles(X,Y).then((tiles_) => {
+                tiles.current = tiles_;
+                climb_started.current = true;
+            });
             setTimeout(() => {
                 gravity.current = true;
                 timeOnLoad.current = Date.now();
@@ -100,7 +94,7 @@ export default function HandlerWrapper(props) {
         return () => {
             window.removeEventListener("load", setTimeAndLoad);
         }
-    },[center.y]);
+    },[center.y,X,Y]);
 
     //TODO: la pagina cade
 
@@ -129,7 +123,7 @@ export default function HandlerWrapper(props) {
         // }
         function handleDown(e) {
             if (climb_started.current) {
-                if (!checkIfGrabbable(tiles.current, e.clientX + scrollable.current.scrollLeft, e.clientY + scrollable.current.scrollTop, TILE_SIZE)) return;
+                if (!checkIfGrabbable(tiles.current, e.clientX + scrollable.current.scrollLeft, e.clientY + scrollable.current.scrollTop, tile_size)) return;
             }
             grubbing.current = true;
             pos.current = { ...pos.current, x: e.clientX, y: e.clientY, left: scrollable.current.scrollLeft, top: scrollable.current.scrollTop }
@@ -142,7 +136,7 @@ export default function HandlerWrapper(props) {
         }
         function handleDown_touch(e) {
             if (climb_started.current) {
-                if (!checkIfGrabbable(tiles.current, e.touches[0].clientX + scrollable.current.scrollLeft, e.touches[0].clientY + scrollable.current.scrollTop, TILE_SIZE)) return;
+                if (!checkIfGrabbable(tiles.current, e.touches[0].clientX + scrollable.current.scrollLeft, e.touches[0].clientY + scrollable.current.scrollTop, tile_size)) return;
             }
             grubbing.current = true; grubbing.current = true;
             pos.current = { ...pos.current, x: e.touches[0].clientX, y: e.touches[0].clientY, left: scrollable.current.scrollLeft, top: scrollable.current.scrollTop }

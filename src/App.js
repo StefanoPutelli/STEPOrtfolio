@@ -1,13 +1,13 @@
 import HandlerWrapper from "./comp/handlerWrapper";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RayCaster from "./comp/Raycaster";
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import favicon from './favicon.ico';
 
 export default function App() {
 
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <title>Stefano Putelli - Full Stack Dev</title>
         <link rel="icon" href={favicon} />
@@ -20,7 +20,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </HelmetProvider>
   )
 }
 

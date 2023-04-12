@@ -30,14 +30,14 @@ body {
     transform: translate(-50%, 0%);
 }
 
-#layer1_background{
+/* #layer1_background{
     background-image: url('./img/sfondo.svg');
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
 
 #layer2_background{
-    background-image: url('./img/final-back_build_piccolino.svg');
+    background-image: url('./img/Climbing\ Wall\ Grip.svg');
     overflow: hidden;
     background-repeat: repeat;
 }
