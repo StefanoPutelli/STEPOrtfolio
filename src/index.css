@@ -11,7 +11,6 @@ body {
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
-    background-color: black;
     overscroll-behavior: none;
     overflow: hidden;
 }
@@ -31,9 +30,14 @@ body {
     transform: translate(-50%, 0%);
 }
 
-#childs{
-    background-image: url('./img/final-back_build_dai.svg');
-    background-color: gray;
+#layer1_background{
+    background-image: url('./img/sfondo.svg');
+    background-repeat: no-repeat;
     background-size: cover;
+}
+
+#layer2_background{
+    background-image: url('./img/final-back_build_piccolino.svg');
     overflow: hidden;
+    background-repeat: repeat;
 }

@@ -119,7 +119,7 @@ export default function HandlerWrapper(props) {
     useEffect(() => {
         if (!loaded) return;
         const ele = document.getElementById('scrollable');
-        const childs = document.getElementById('childs');
+        const childs = document.getElementById('layer1_background');
         scrollable.current.scrollTop = pos.current.top;
         scrollable.current.scrollLeft = pos.current.left;
         // function preventMotion(event) {
